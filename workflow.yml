@@ -1,0 +1,446 @@
+app:
+  description: 自动生成电商标题、卖点和短视频开头，并写入飞书多维表格。
+  icon: 🛍️
+  icon_background: '#FFF3E0'
+  icon_type: emoji
+  mode: workflow
+  name: 电商文案生成器
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.27@6914d35be6c0c8d923399d40dd1217f159ee8358100e404a720f8a688e4020b9
+    version: null
+kind: app
+site:
+  chat_color_theme: null
+  chat_color_theme_inverted: false
+  copyright: null
+  custom_disclaimer: ''
+  default_language: zh-Hans
+  description: null
+  icon: 🛍️
+  icon_background: '#FFF3E0'
+  icon_type: emoji
+  input_placeholder: null
+  privacy_policy: null
+  show_workflow_steps: true
+  title: 电商文案生成器
+  use_icon_as_answer_icon: false
+version: 0.7.0
+workflow:
+  conversation_variables: []
+  environment_variables:
+  - description: 请在 Dify 中配置，不要提交真实凭证
+    id: 6596b125-ed0e-41a0-a723-b640040a946f
+    name: FEISHU_APP_ID
+    selector:
+    - env
+    - FEISHU_APP_ID
+    value: ''
+    value_type: string
+  - description: 请在 Dify 中配置，不要提交真实凭证
+    id: 49c2cee7-cb2c-42ad-be70-fc3bea883ab9
+    name: FEISHU_APP_SECRET
+    selector:
+    - env
+    - FEISHU_APP_SECRET
+    value: ''
+    value_type: secret
+  - id: FEISHU_BASE_TOKEN
+    name: FEISHU_BASE_TOKEN
+    selector:
+    - env
+    - FEISHU_BASE_TOKEN
+    value: ''
+    value_type: string
+    description: 填写你自己的飞书多维表格标识
+  - id: FEISHU_TABLE_ID
+    name: FEISHU_TABLE_ID
+    selector:
+    - env
+    - FEISHU_TABLE_ID
+    value: ''
+    value_type: string
+    description: 填写你自己的飞书多维表格标识
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        attachment_image_file_size_limit: 2
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        file_upload_limit: 50
+        image_file_batch_limit: 10
+        image_file_size_limit: 10
+        knowledge_file_size_limit: 15
+        single_chunk_attachment_limit: 10
+        skill_file_size_limit: 50
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1794896830309--1794897186540-target
+      source: '1794896830309'
+      sourceHandle: source
+      target: '1794897186540'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1794897186540--1794897569417-target
+      source: '1794897186540'
+      sourceHandle: source
+      target: '1794897569417'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: http-request
+      id: 1794897186540-source-1794899737459-target
+      source: '1794897186540'
+      sourceHandle: source
+      target: '1794899737459'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: http-request
+        targetType: code
+      id: 1794899737459-source-1794899785116-target
+      source: '1794899737459'
+      sourceHandle: source
+      target: '1794899785116'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: http-request
+      id: 1794899785116--1794899861719-target
+      source: '1794899785116'
+      sourceHandle: source
+      target: '1794899861719'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: 用户输入
+        type: start
+        variables:
+        - default: ''
+          hint: ''
+          label: 产品名称
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: product_name
+        - default: ''
+          hint: ''
+          label: 目标人群
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: target_audience
+      height: 134
+      id: '1794896830309'
+      position:
+        x: 0
+        y: 76.25
+      positionAbsolute:
+        x: 0
+        y: 76.25
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-v4-flash
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 089782b4-4479-41da-a5a1-da4d129bdac5
+          role: system
+          text: '你是一名有5年经验的电商运营文案专家，擅长写天猫/抖音/小红书风格的商品文案。
+
+
+            请根据用户输入的【产品名称】和【目标人群】，严格按以下格式输出：
+
+
+            === 商品标题（3条）===
+
+            要求：每条15-25字，包含人群痛点+产品利益点，带1-2个emoji，适合抖音/小红书风格
+
+            1.
+
+            2.
+
+            3.
+
+
+            === 核心卖点（3条）===
+
+            要求：每条一句话，用"特点+好处"结构，口语化不啰嗦
+
+            1.
+
+            2.
+
+            3.
+
+
+            === 短视频脚本开头（1条）===
+
+            要求：前3秒必须是钩子（提问/反常识/痛点场景），后面接产品引出，总长不超过80字'
+        - id: 0cfead2c-8cbe-4c08-a2ec-d32589b40fb7
+          role: user
+          text: '{{#1794896830309.product_name#}}
+
+            {{#1794896830309.target_audience#}}'
+        reasoning_format: separated
+        selected: false
+        title: LLM
+        type: llm
+        vision:
+          enabled: false
+      height: 87
+      id: '1794897186540'
+      position:
+        x: 342
+        y: 97.25
+      positionAbsolute:
+        x: 342
+        y: 97.25
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+      zIndex: 0
+    - data:
+        outputs:
+        - value_selector:
+          - '1794897186540'
+          - text
+          value_type: string
+          variable: result
+        selected: false
+        title: 输出
+        type: end
+      height: 87
+      id: '1794897569417'
+      position:
+        x: 703
+        y: 0
+      positionAbsolute:
+        x: 703
+        y: 0
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+      zIndex: 0
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - type: text
+            value: '{"app_id":"{{#env.FEISHU_APP_ID#}}","app_secret":"{{#env.FEISHU_APP_SECRET#}}"}'
+          type: raw-text
+        headers: 'Content-Type: application/json'
+        method: post
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: 飞书：获取访问令牌
+        type: http-request
+        url: https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal
+        variables: []
+      height: 152
+      id: '1794899737459'
+      position:
+        x: 703
+        y: 167
+      positionAbsolute:
+        x: 703
+        y: 167
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+      zIndex: 0
+    - data:
+        code: "import json\n\ndef main(arg1: str, arg2: str, product_name: str, target_audience:\
+          \ str):\n    data = json.loads(arg1)\n    if data.get(\"code\") != 0 or\
+          \ not data.get(\"tenant_access_token\"):\n        raise ValueError(\"飞书认证失败，请检查应用凭证与权限\"\
+          )\n    payload = {\"fields\": {\"产品名称\": product_name, \"目标人群\": target_audience,\
+          \ \"生成文案\": arg2}}\n    return {\"result\": json.dumps(payload, ensure_ascii=False),\
+          \ \"auth_header\": \"Bearer \" + data[\"tenant_access_token\"]}\n"
+        code_language: python3
+        outputs:
+          auth_header:
+            children: null
+            type: string
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 飞书：整理入库数据
+        type: code
+        variables:
+        - value_selector:
+          - '1794899737459'
+          - body
+          value_type: string
+          variable: arg1
+        - value_selector:
+          - '1794897186540'
+          - text
+          value_type: string
+          variable: arg2
+        - value_selector:
+          - '1794896830309'
+          - product_name
+          value_type: string
+          variable: product_name
+        - value_selector:
+          - '1794896830309'
+          - target_audience
+          value_type: string
+          variable: target_audience
+      height: 51
+      id: '1794899785116'
+      position:
+        x: 1044
+        y: 217.5
+      positionAbsolute:
+        x: 1044
+        y: 217.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+      zIndex: 0
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - type: text
+            value: '{{#1794899785116.result#}}'
+          type: raw-text
+        headers: 'Content-Type: application/json
+
+          Authorization: {{#1794899785116.auth_header#}}'
+        method: post
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: false
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: 飞书：新增素材记录
+        type: http-request
+        url: https://open.feishu.cn/open-apis/bitable/v1/apps/{{#env.FEISHU_BASE_TOKEN#}}/tables/{{#env.FEISHU_TABLE_ID#}}/records
+        variables: []
+      height: 139
+      id: '1794899861719'
+      position:
+        x: 1385
+        y: 173.5
+      positionAbsolute:
+        x: 1385
+        y: 173.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+      zIndex: 0
+    viewport:
+      x: 54.014889626053446
+      y: 276.4268291191174
+      zoom: 0.7053071693371383
+  rag_pipeline_variables: []
